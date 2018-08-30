@@ -19,7 +19,7 @@ Clear-Host
 
 if ($test -eq $true){
     Write-Host "This is TEST! failed (cards.ps1)"
-    exit 1
+    exit #1 # for checking test
 }
 
 if([IO.File]::Exists(".\$cardsFile")){
