@@ -1,16 +1,11 @@
-$error1 = $(Invoke-Expression ".\cards.ps1 -test")
+Clear-Host
 
-try {
-    Invoke-Expression ".\cards.ps1 -test"
-} catch {
-   exit 123 # error handling go here, $_ contains the error record
-}
+$LASTEXITCODE = 0
+Invoke-Expression ".\cards.ps1 -test"
 
-Write-Host "11111: $?"
-
-if ($error1 -eq $true){
-    Write-Host "Error: $error1"
-    exit $error1
+if ($LASTEXITCODE -ne 0){
+    Write-Host "Error: $LASTEXITCODE"
+    exit $LASTEXITCODE
 }
 
 Write-Host "------END TEST! (test.ps1)"
