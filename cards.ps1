@@ -18,7 +18,8 @@ $cardsFile = "cards.txt"
 Clear-Host
 
 if ($test -eq $true){
-    Write-Host "This is TEST! (cards.ps1)"
+    Write-Host "This is TEST! failed (cards.ps1)"
+    exit 1
 }
 
 if([IO.File]::Exists(".\$cardsFile")){
