@@ -18,6 +18,3 @@ matrix:
         - brew tap caskroom/cask
         - brew cask install powershell
   fast_finish: true
-
-install:
-  - pwsh -f "${env:TRAVIS_BUILD_DIR}/cards.ps1"
