@@ -4,7 +4,9 @@ matrix:
   include:
     - os: linux
       dist: trusty
-      sudo: false
+      sudo: true
+      before_install:
+        - sudo apt-get update --allow-unauthenticated
       addons:
         apt:
           sources:
