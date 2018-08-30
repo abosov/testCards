@@ -1,2 +1,2 @@
 Write-Host "THE END"
-exit /b 1
+exit 123456
