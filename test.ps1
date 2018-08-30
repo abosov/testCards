@@ -1,1 +1,2 @@
-exit /b 1
+Write-Host "THE END"
+
