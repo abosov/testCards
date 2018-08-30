@@ -17,4 +17,4 @@ matrix:
         - brew cask install powershell
   fast_finish: true
 script:
-  - pwsh
+  - pwsh /home/travis/build/abosov/testCard/test.ps1
