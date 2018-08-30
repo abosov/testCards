@@ -17,11 +17,13 @@ $cardsFile = "cards.txt"
 
 Clear-Host
 
+# user-test
 if ($test -eq $true){
-    Write-Host "This is TEST! failed (cards.ps1)"
+    Write-Host "This is TEST! (cards.ps1)"
     exit #1 # for checking test
 }
 
+# read cards-file
 if([IO.File]::Exists(".\$cardsFile")){
     $cardArray = [IO.File]::ReadAllLines(".\$cardsFile")
 } else {
@@ -31,6 +33,7 @@ if([IO.File]::Exists(".\$cardsFile")){
 
 $countCards = $cardArray.Count
 
+# shuffle
 if ($shuffle -eq $true){
 
     for ($i = 0; $i -lt $countCards; $i++){    
@@ -42,9 +45,9 @@ if ($shuffle -eq $true){
 
 }
 
-
+# hand over the cards
 if (($players * $cardsForPlayer) -gt $countCards) {
-    Write-Host "Not enough cards"
+    Write-Host "Not enough cards" 
 } elseif ($players -ne 0 -and $cardsForPlayer -ne 0){
     $LastCard = $countCards - 1
     for ($player = 1; $player -le $players; $player++){
@@ -60,6 +63,7 @@ if (($players * $cardsForPlayer) -gt $countCards) {
 }
 
 
+# collect cards
 if ($getCardsFromFiles -ne $false){
     foreach ($playerFile in $getCardsFromFiles){
         if([IO.File]::Exists(".\$playerFile")){
@@ -75,4 +79,3 @@ if ($getCardsFromFiles -ne $false){
 $cardArray | Out-File -filePath ".\cards.txt"
 
 Write-Host "Finished"
-
