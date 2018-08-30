@@ -18,3 +18,5 @@ matrix:
         - brew tap caskroom/cask
         - brew cask install powershell
   fast_finish: true
+script:
+  - pwsh -f "${env:TRAVIS_BUILD_DIR}/test.ps1"
