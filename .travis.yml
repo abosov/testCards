@@ -6,6 +6,9 @@ matrix:
       dist: trusty
       sudo: true
       before_install:
+        - curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
+        - curl https://packages.microsoft.com/config/ubuntu/14.04/prod.list | sudo tee /etc/apt/sources.list.d/microsoft.list
+        - sudo apt-get update
         - sudo apt-get install -y powershell
     - os: osx
       osx_image: xcode9.1
@@ -14,4 +17,4 @@ matrix:
         - brew cask install powershell
   fast_finish: true
 script:
-  - pwsh -f "${env:TRAVIS_BUILD_DIR}/test.ps1"
+  - pwsh -f "./test.ps1"
