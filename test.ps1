@@ -1,2 +1,3 @@
-Write-Host "THE END"
-exit 123456
+Invoke-Expression ".\cards.ps1 -test"
+
+Write-Host "END TEST! (test.ps1)"

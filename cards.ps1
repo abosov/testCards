@@ -6,6 +6,7 @@
 
 
 param (
+    [switch] $test,
     [switch] $shuffle,
     [int] $players,
     [int] $cardsForPlayer,
@@ -15,6 +16,10 @@ param (
 $cardsFile = "cards.txt"
 
 Clear-Host
+
+if ($test -eq $true){
+    Write-Host "This is TEST! (cards.ps1)"
+}
 
 if([IO.File]::Exists(".\$cardsFile")){
     $cardArray = [IO.File]::ReadAllLines(".\$cardsFile")
@@ -67,3 +72,6 @@ if ($getCardsFromFiles -ne $false){
 }
 
 $cardArray | Out-File -filePath ".\cards.txt"
+
+Write-Host "Finished"
+
