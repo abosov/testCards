@@ -14,6 +14,7 @@ param (
 )
 
 $cardsFile = "cards.txt"
+$localPath = Get-Location
 
 Clear-Host
 
@@ -24,11 +25,11 @@ if ($test -eq $true){
 }
 
 # read cards-file
-if([IO.File]::Exists(".\$cardsFile")){
-    $cardArray = [IO.File]::ReadAllLines(".\$cardsFile")
+if([IO.File]::Exists("$localPath\$cardsFile")){
+    $cardArray = [IO.File]::ReadAllLines("$localPath\$cardsFile")
 } else {
     Write-Host "No card file"
-    exit
+    exit 2
 }
 
 $countCards = $cardArray.Count
@@ -42,7 +43,7 @@ if ($shuffle -eq $true){
         $cardArray[$i] = $cardArray[$changedCard]
         $cardArray[$changedCard] = $current
     }
-
+    Write-Host "Shuffled"
 }
 
 # hand over the cards
@@ -58,24 +59,31 @@ if (($players * $cardsForPlayer) -gt $countCards) {
             $LastCard--     
             $cardArray = $cardArray[0..($cardArray.Count-2)]
         }
-        $playerArray | Out-File -filePath ".\player$player.txt"
+        $playerArray | Out-File -filePath "$localPath\player$player.txt"
     }
+
+    if ($players * $cardsForPlayer -eq $countCards){
+        $cardArray = @()
+    }
+
+    Write-Host "Dealt $players players $cardsForPlayer cards for each"
 }
 
 
 # collect cards
 if ($getCardsFromFiles -ne $false){
     foreach ($playerFile in $getCardsFromFiles){
-        if([IO.File]::Exists(".\$playerFile")){
-            $fileContent = [IO.File]::ReadAllLines(".\$playerFile")
+        if([IO.File]::Exists("$localPath\$playerFile")){
+            $fileContent = [IO.File]::ReadAllLines("$localPath\$playerFile")
             $cardArray += $fileContent
-            Remove-Item -Path ".\$playerFile"
+            Remove-Item -Path "$localPath\$playerFile"
+            Write-Host "Cards collected from file $localPath\$playerFile"
         } else {
             Write-Host "No such file - $playerFile"
         }
     }
 }
 
-$cardArray | Out-File -filePath ".\cards.txt"
+$cardArray | Out-File -filePath "$localPath\cards.txt"
 
 Write-Host "Finished"
