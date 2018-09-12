@@ -6,7 +6,6 @@
 
 
 param (
-    [switch] $test,
     [switch] $shuffle,
     [int] $players,
     [int] $cardsForPlayer,
@@ -16,19 +15,11 @@ param (
 $cardsFile = "cards.txt"
 $localPath = Get-Location
 
-Clear-Host
-
-# user-test
-if ($test -eq $true){
-    Write-Host "This is TEST! (cards.ps1)"
-    exit #1 # for checking test
-}
-
 # read cards-file
 if([IO.File]::Exists("$localPath/$cardsFile")){
     $cardArray = [IO.File]::ReadAllLines("$localPath/$cardsFile")
 } else {
-    Write-Host "No card file"
+    Write-Host "Error (cards.ps1): No card file"
     exit 2
 }
 
@@ -46,9 +37,10 @@ if ($shuffle -eq $true){
     Write-Host "Shuffled"
 }
 
-# hand over the cards
+# deal the cards
 if (($players * $cardsForPlayer) -gt $countCards) {
-    Write-Host "Not enough cards" 
+    Write-Host "Error (cards.ps1): Not enough cards ($($players * $cardsForPlayer) greater then $countCards)" 
+    exit 50
 } elseif ($players -ne 0 -and $cardsForPlayer -ne 0){
     $LastCard = $countCards - 1
     for ($player = 1; $player -le $players; $player++){
@@ -62,6 +54,7 @@ if (($players * $cardsForPlayer) -gt $countCards) {
         $playerArray | Out-File -filePath "$localPath/player$player.txt"
     }
 
+    # all cards are dealt
     if ($players * $cardsForPlayer -eq $countCards){
         $cardArray = @()
     }
@@ -77,13 +70,14 @@ if ($getCardsFromFiles -ne $false){
             $fileContent = [IO.File]::ReadAllLines("$localPath/$playerFile")
             $cardArray += $fileContent
             Remove-Item -Path "$localPath/$playerFile"
-            Write-Host "Cards collected from file $localPath/$playerFile"
+            Write-Host "Cards collected from file $localPath/$playerFile - $($fileContent.Count)"
         } else {
-            Write-Host "No such file - $playerFile"
+            Write-Host "Error (cards.ps1): No such file - $playerFile"
         }
     }
 }
 
 $cardArray | Out-File -filePath "$localPath/cards.txt"
 
-Write-Host "Finished"
+Write-Host "Finished (cards.ps1)"
+exit 0
