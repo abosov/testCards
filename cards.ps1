@@ -2,7 +2,8 @@
 # ./cards.ps1 -shuffle
 # ./cards.ps1 -players 2 -cardsForPlayer 26
 # ./cards.ps1 -getCardsFromFiles player1.txt,player2.txt
-#
+# or use "-c" parameter for one line Linux command
+# bash-3.2$ pwsh -c ./cards.ps1 -getCardsFromFiles player1.txt,player2.txt
 
 
 param (
